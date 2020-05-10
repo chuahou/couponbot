@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 {% block centercontent %}
-	<h1><b>Hello {{ name }}</b></h1>
-	<p class="lead">Coupon submitted: <b>{{ code }}</b> <br/>
-	Your offer: <b>{{ offer }}</b></p>
-	<p class="lead">Submitted to {{ recipient }}</p>
+	{% if success %}
+		<h1><b>Hello {{ name }}</b></h1>
+		<p class="lead">Coupon submitted: <b>{{ code }}</b> <br/>
+		Your offer: <b>{{ offer }}</b></p>
+		<p class="lead">Submitted to {{ recipient }}</p>
+	{% else %}
+		<h1 style="color:red"><b>Failed</b></h1>
+		<p class="lead">{{ error }}</p>
+		<a role="button" href="/" class="btn btn-danger">Try again</a>
+	{% endif %}
 {% endblock %}
 

@@ -36,13 +36,17 @@ def submit():
     cursor.execute("SELECT offer, used FROM codes WHERE code = '" + code + "'")
     results = cursor.fetchall()
 
-    # print error if invalid code or used code
+    # error if invalid code or used code
+    offer = ""
+    error = None
     if (len(results) == 0):
-        return "Invalid code"
+        error = "Invalid code"
     elif (results[0][1]): # used
-        return "Code already used"
+        error = "Code already used"
+    else: # okay
+        offer = results[0][0]
 
     # return template
     return render_template("submit.html", name=name, recipient=recipient,
-            code=code, offer=results[0][0])
+            code=code, offer=offer, error=error, success=(error == None))
 
