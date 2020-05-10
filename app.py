@@ -12,6 +12,7 @@ import psycopg2
 
 # standard imports
 import os # environ
+import requests # sending email
 
 # main app setup
 app = Flask(__name__)
@@ -22,6 +23,11 @@ Bootstrap(app)
 NAME = os.environ["NAME"]
 RECIPIENT = os.environ["RECIPIENT"]
 DATABASE_URL = os.environ["DATABASE_URL"]
+MAILGUN_API_KEY = os.environ["MAILGUN_API_KEY"]
+MAILGUN_DOMAIN = os.environ["MAILGUN_DOMAIN"]
+MAILGUN_FROM = os.environ["MAILGUN_FROM"]
+MAILGUN_TO = os.environ["MAILGUN_TO"]
+MAILGUN_SUBJECT = os.environ["MAILGUN_SUBJECT"]
 
 # main coupon submission form
 # only accepts uppercase alpha numeric input of length 7
@@ -67,6 +73,13 @@ def submit():
             cursor.execute( # set offer to used
                     "UPDATE codes SET used = true WHERE code = '" + code + "'")
             conn.commit()
+            requests.post(
+                f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages",
+                auth=("api", MAILGUN_API_KEY),
+                data={"from": MAILGUN_FROM,
+                      "to": [MAILGUN_TO],
+                      "subject": MAILGUN_SUBJECT,
+                      "text": f"Code: {code}, Offer: {offer} claimed"})
     except (Exception, psycopg2.Error) as error:
         error = "Database connection error"
     finally:
