@@ -1,2 +1,3 @@
 #!/bin/bash
-FLASK_APP=app.py NAME=Test python -m flask run
+. venv/bin/activate
+FLASK_APP=app.py NAME=Test python3 -m flask run
