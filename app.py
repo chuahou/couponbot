@@ -60,7 +60,7 @@ def submit():
         # get records matching our code
         code = request.args.get("code")
         cursor.execute(
-                "SELECT offer, used FROM codes WHERE code = '" + code + "'")
+                "SELECT offer, used FROM codes WHERE code = %s", [code])
         results = cursor.fetchall()
 
         # error if invalid code or used code
@@ -71,7 +71,7 @@ def submit():
         else: # okay
             offer = results[0][0] # get offer text
             cursor.execute( # set offer to used
-                    "UPDATE codes SET used = true WHERE code = '" + code + "'")
+                    "UPDATE codes SET used = true WHERE code = %s", [code])
             conn.commit()
             requests.post(
                 f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages",
@@ -80,7 +80,7 @@ def submit():
                       "to": [MAILGUN_TO],
                       "subject": MAILGUN_SUBJECT,
                       "text": f"Code: {code}, Offer: {offer} claimed"})
-    except (Exception, psycopg2.Error) as error:
+    except (Exception, psycopg2.Error):
         error = "Database connection error"
     finally:
         # close connection
@@ -90,5 +90,5 @@ def submit():
 
     # return template
     return render_template("submit.html", name=NAME, recipient=RECIPIENT,
-            code=code, offer=offer, error=error, success=(error == None))
+            code=code, offer=offer, error=error, success=(error is None))
 
