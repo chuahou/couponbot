@@ -7,12 +7,19 @@
 			<div align="middle">
 				<h1><b>Hello {{ name }}</b></h1>
 				<p class="lead">Welcome to the <br/>Coupon Submission Portal.</p>
+
 				<form action="" method="post" novalidate>
 					<div class="form-group">
 						{{ form.code(size=32) }}
 					</div>
+					{{ form.csrf_token }}
 					{{ form.submit() }}
 				</form>
+
+				{% if invalid %}
+				<br/>
+				<b>Please enter a valid code.</b>
+				{% endif %}
 			</div>
 		</div>
 	</div>

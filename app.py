@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, flash
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
@@ -10,11 +10,19 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.urandom(32)
 Bootstrap(app)
 
-class Form(FlaskForm):
+class CouponForm(FlaskForm):
     code = StringField("Username", validators=[DataRequired()])
     submit = SubmitField("Use Code")
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("base.html", name=os.getenv("NAME", "Invalid Name"),
-            form=Form())
+    form = CouponForm()
+    if form.validate_on_submit():
+        flash(f"Code submitted: {form.code.data}")
+        return redirect("/submit")
+    return render_template("index.html", name=os.getenv("NAME", "Invalid Name"),
+            form=form, invalid=(len(form.code.errors) > 0))
+
+@app.route("/submit")
+def submit():
+    return "Done"
