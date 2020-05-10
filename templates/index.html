@@ -1,27 +1,19 @@
-{% extends "bootstrap/base.html" %}		
-{% block title %}Coupon Submission{% endblock %}
-{% block content %}
-	<style> html, body { height: 100%; } </style>
-	<div class="container" style="display: table; height: 100%">
-		<div class="row" style="display: table-cell; vertical-align: middle;">
-			<div align="middle">
-				<h1><b>Hello {{ name }}</b></h1>
-				<p class="lead">Welcome to the <br/>Coupon Submission Portal.</p>
+{% extends "base.html" %}
+{% block centercontent %}
+	<h1><b>Hello {{ name }}</b></h1>
+	<p class="lead">Welcome to the <br/>Coupon Submission Portal.</p>
 
-				<form action="" method="post" novalidate>
-					<div class="form-group">
-						{{ form.code(size=32) }}
-					</div>
-					{{ form.csrf_token }}
-					{{ form.submit() }}
-				</form>
-
-				{% if invalid %}
-				<br/>
-				<b>Please enter a valid code.</b>
-				{% endif %}
-			</div>
+	<form action="" method="post" novalidate>
+		<div class="form-group">
+			{{ form.code(size=32) }}
 		</div>
-	</div>
+		{{ form.csrf_token }}
+		{{ form.submit() }}
+	</form>
+
+	{% if invalid %}
+	<br/>
+	<b>Please enter a valid code.</b>
+	{% endif %}
 {% endblock %}
 
