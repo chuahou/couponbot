@@ -44,7 +44,10 @@ def submit():
     elif (results[0][1]): # used
         error = "Code already used"
     else: # okay
-        offer = results[0][0]
+        offer = results[0][0] # get offer text
+        cursor.execute( # set offer to used
+                "UPDATE codes SET used = true WHERE code = '" + code + "'")
+        conn.commit()
 
     # return template
     return render_template("submit.html", name=name, recipient=recipient,
