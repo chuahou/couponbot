@@ -90,5 +90,5 @@ def submit():
 
     # return template
     return render_template("submit.html", name=NAME, recipient=RECIPIENT,
-            code=code, offer=offer, error=error, success=(error == None))
+            code=code, offer=offer, error=error, success=(error is None))
 
