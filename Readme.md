@@ -2,6 +2,8 @@
 
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/chuahou/couponbot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/chuahou/couponbot/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/chuahou/couponbot.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/chuahou/couponbot/context:python)
+![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Simple Flask website used for input of one-time use coupons, that when redeemed,
 will send an email to the issuer.
@@ -50,3 +52,5 @@ As in `requirements.txt`, plus:
 - Mailgun
 - PostgreSQL
 
+---
+Made for Mother's Day 2020
